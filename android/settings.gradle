@@ -1,0 +1,6 @@
+rootProject.name = 'rnWithPili'
+
+include ':app'
+
+include ':react-native-pili'
+project(':react-native-pili').projectDir = new File(settingsDir, '../libs/react-native-pili/android')
