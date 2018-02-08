@@ -12,8 +12,8 @@ import {
   View,
 	Dimensions
 } from 'react-native';
-import {Player} from 'react-native-pili';
 import NavList from './components/navList';
+import LivePlayer from './components/live-player';
 
 
 const windowSize = Dimensions.get('window');
@@ -27,7 +27,7 @@ export default class App extends Component<Props> {
         title: ''
     };
   }
-    chooseChannelHanderl = ({title, source}) => {
+    chooseChannelHander = ({title, source}) => {
       console.log(title, source);
       this.setState({
           uri: source,
@@ -39,49 +39,7 @@ export default class App extends Component<Props> {
     const {uri, title} = this.state;
     return (
       <View style={styles.container}>
-
-          {
-	          uri ?  (
-                  <Player
-                      source={{
-				          uri: uri,
-				          controller: true, //Controller ui  Android only
-				          timeout: 10 * 1000, //live streaming timeout (ms) Android only
-				          live:true, //live streaming ? Android only
-				          hardCodec:false, //hard codec [recommended false]  Android only
-			          }}
-                      started={true} //iOS only
-                      muted={false} //iOS only
-                      style={{
-	                      position: 'absolute',
-	                      left: 0,
-	                      top: 0,
-	                      width: windowSize.width,
-	                      height: windowSize.height
-                      }}
-                      onLoading={(e)=>{
-	                      console.log('onLoading');
-	                      console.log(e);
-                      }} //loading from remote or local
-                      onPaused={(e)=>{
-	                      console.log('onPaused');
-	                      console.log(e);
-                      }} //pause event
-                      onShutdown={(e)=>{
-	                      console.log('onShutdown');
-	                      console.log(e);
-                      }} //stopped event
-                      onError={(error)=>{
-	                      console.log('onError');
-                        console.log(error);
-                      }} //error event
-                      onPlaying={(e)=>{
-                        console.log('onPlay');
-                        console.log(e);
-                      }} //play event
-                  />
-              ) : null
-          }
+        <LivePlayer uri={uri} />
         <View style={{
 	        position: 'absolute',
 	        left: 0,
@@ -89,7 +47,7 @@ export default class App extends Component<Props> {
 	        height: windowSize.height,
             backgroundColor: 'rgba(255,255,255, 0.5)'
         }}>
-          <NavList chooseChannelHanderl={this.chooseChannelHanderl}/>
+          <NavList chooseChannelHander={this.chooseChannelHander}/>
         </View>
       </View>
     );
